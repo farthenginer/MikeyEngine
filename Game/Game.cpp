@@ -1,9 +1,9 @@
 ﻿#include "Game.h"
-#include "TextureManager.h"
+#include "../Managers/TextureManager.h"
 #include "Map.h"
-#include "ECS/Components.h"
-#include "Vector2D.h"
-#include "Collision.h"
+#include "../Engine/Components.h"
+#include "../Engine/Vector2D.h"
+#include "../Engine/Collision.h"
 Map* map;
 
 SDL_Renderer* Game::renderer = nullptr;
@@ -72,7 +72,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	Map::LoadMap("assets/map.map", 16, 16);
 
 	player.addComponent<TransformComponent>(0,0,16,16,2);
-	player.addComponent<SpriteComponent>("assets/Player_Normal_Bottom.png", 4 , 225);
+	player.addComponent<SpriteComponent>("assets/Player/Animations/Run/Player_Run_Side.png", 3 , 100);
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("player");
 	player.addGroup(groupPlayers);

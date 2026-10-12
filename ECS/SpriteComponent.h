@@ -1,7 +1,7 @@
 #pragma once
-#include "Components.h"
+#include "../Engine/Components.h"
 #include "SDL.h"
-#include "../TextureManager.h"
+#include "../Managers/TextureManager.h"
 
 class SpriteComponent : public Component
 {

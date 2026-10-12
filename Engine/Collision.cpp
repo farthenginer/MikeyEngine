@@ -1,6 +1,6 @@
 #include"Collision.h"
-#include "ColliderComponent.h"
-
+#include "../ECS/ColliderComponent.h"
+#include <iostream>
 bool Collision::AABB(const SDL_Rect& recA, const SDL_Rect& recB)
 {
 	if (

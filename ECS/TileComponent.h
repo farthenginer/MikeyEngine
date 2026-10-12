@@ -1,8 +1,8 @@
 #pragma once
 
-#include "ECS/ECS.h"
-#include "ECS/TransformComponent.h"
-#include "ECS/SpriteComponent.h"
+#include "ECS.h"
+#include "TransformComponent.h"
+#include "SpriteComponent.h"
 #include "SDL.h"
 
 class TileComponent : public Component
