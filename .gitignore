@@ -1,0 +1,35 @@
+bin/
+obj/
+build/
+out/
+dist/
+*.exe
+*.out
+*.app
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dylib
+
+
+# ======= IDE ve Editör Dosyaları (IDE & Editors) =======
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+
+# CLion / JetBrains
+.idea/
+cmake-build-*/
+
+# ======= Sistem ve Geçici Dosyalar (System & Temp) =======
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
