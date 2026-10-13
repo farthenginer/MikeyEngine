@@ -2,6 +2,8 @@
 #include "../Engine/Components.h"
 #include "SDL.h"
 #include "../Managers/TextureManager.h"
+#include "../Engine/Animation.h"
+#include <map>
 
 class SpriteComponent : public Component
 {
@@ -16,17 +18,38 @@ private:
 
 public:
 
+	int animIndex = 0;
+
+	std::map<const char*, Animation> animations;
+
+	SDL_RendererFlip spriteFlip = SDL_FLIP_NONE;
+
 	SpriteComponent() = default;
 
 	SpriteComponent(const char* path)
 	{
 		SetTex(path);
 	}
-	SpriteComponent(const char* path, int nFrames, int mSpeed)
+	SpriteComponent(const char* path, bool isAnimated)
 	{
-		animated = true;
-		frames = nFrames;
-		speed = mSpeed;
+		animated = isAnimated;
+
+		Animation bottomIdle = Animation(0, 4, 222);
+		Animation sideIdle = Animation(1, 4, 222);
+		Animation topIdle = Animation(2, 4, 222);
+
+		Animation bottomRun = Animation(3, 4, 222);
+		Animation sideRun = Animation(4, 4, 222);
+		Animation topRun = Animation(5, 4, 222);
+
+	    animations.emplace("bottomIdle", bottomIdle);
+	    animations.emplace("sideIdle", sideIdle);
+	    animations.emplace("topIdle", topIdle);
+	    animations.emplace("bottomRun", bottomRun);
+	    animations.emplace("sideRun", sideRun);
+	    animations.emplace("topRun", topRun);
+
+		Play("bottomIdle");
 		SetTex(path);
 	}
 	~SpriteComponent()
@@ -56,6 +79,8 @@ public:
 			srcRect.x = srcRect.w * static_cast<int>((SDL_GetTicks() / speed) % frames);
 		}
 
+		srcRect.y = animIndex * transform->height;
+
 		destRect.x = static_cast<int>(transform->position.x);
 		destRect.y = static_cast<int>(transform->position.y);
 
@@ -64,6 +89,13 @@ public:
 	}
 	void draw() override
 	{
-		TextureManager::Draw(texture, srcRect, destRect);
+		TextureManager::Draw(texture, srcRect, destRect, spriteFlip);
+	}
+
+	void Play(const char* animName)
+	{
+		frames = animations[animName].frames;
+		animIndex = animations[animName].index;
+		speed = animations[animName].speed;
 	}
 };

@@ -13,7 +13,7 @@ public:
 	int width = 32;
 	int scale = 1;
 
-	int speed = 10;
+	int speed = 5;
 
 	TransformComponent()
 	{

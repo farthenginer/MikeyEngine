@@ -69,10 +69,10 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 	map = new Map();
 
-	Map::LoadMap("assets/map.map", 16, 16);
+	//Map::LoadMap("assets/map.map", 16, 16);
 
-	player.addComponent<TransformComponent>(0,0,16,16,2);
-	player.addComponent<SpriteComponent>("assets/Player/Animations/Run/Player_Run_Side.png", 3 , 100);
+	player.addComponent<TransformComponent>(0,0,16,16,4);
+	player.addComponent<SpriteComponent>("assets/Player/Animations/Movement/Player_Movement.png", true);
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("player");
 	player.addGroup(groupPlayers);
