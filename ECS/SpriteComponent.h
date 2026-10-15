@@ -34,13 +34,13 @@ public:
 	{
 		animated = isAnimated;
 
-		Animation bottomIdle = Animation(0, 4, 222);
-		Animation sideIdle = Animation(1, 4, 222);
-		Animation topIdle = Animation(2, 4, 222);
+		Animation bottomIdle = Animation(0, 4, 155);
+		Animation sideIdle = Animation(1, 4, 155);
+		Animation topIdle = Animation(2, 4, 155);
 
-		Animation bottomRun = Animation(3, 4, 222);
-		Animation sideRun = Animation(4, 4, 222);
-		Animation topRun = Animation(5, 4, 222);
+		Animation bottomRun = Animation(3, 4, 155);
+		Animation sideRun = Animation(4, 4, 155);
+		Animation topRun = Animation(5, 4, 155);
 
 	    animations.emplace("bottomIdle", bottomIdle);
 	    animations.emplace("sideIdle", sideIdle);

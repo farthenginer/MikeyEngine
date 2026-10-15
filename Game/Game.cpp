@@ -13,8 +13,12 @@ SDL_Event Game::event;
 
 std::vector<ColliderComponent*> Game::colliders;
 
+bool Game::isRunning = false;
+
 auto& player(manager.addEntity());
 auto& wall(manager.addEntity());
+
+const char* mapfile = "assets/tiles/terrain_ss.png"; //tilemap sys
 
 enum groupLabels : std::size_t
 {
@@ -23,6 +27,10 @@ enum groupLabels : std::size_t
 	groupEnemies,
 	groupColliders
 };
+
+auto& tiles(manager.getGroup(groupMap));
+auto& players(manager.getGroup(groupPlayers));
+auto& enemies(manager.getGroup(groupEnemies));
 
 Game::Game()
 {
@@ -69,17 +77,13 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 	map = new Map();
 
-	//Map::LoadMap("assets/map.map", 16, 16);
+	Map::LoadMap("assets/tiles/map.map", 25, 20);
 
-	player.addComponent<TransformComponent>(0,0,16,16,4);
+	player.addComponent<TransformComponent>(400,320,16,16,4);
 	player.addComponent<SpriteComponent>("assets/Player/Animations/Movement/Player_Movement.png", true);
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("player");
 	player.addGroup(groupPlayers);
-	wall.addComponent<TransformComponent>(300.0f, 300.0f, 300, 20, 1);
-	wall.addComponent<SpriteComponent>("assets/tiles/dirt.png");
-	wall.addComponent<ColliderComponent>("wall");
-	wall.addGroup(groupMap);
 }
 
 void Game::handleEvents()
@@ -98,22 +102,43 @@ void Game::update()
 {
 	manager.refresh();
 	manager.update();
+
+	Vector2D pVel = player.getComponent<TransformComponent>().velocity;
+	int pSpeed = player.getComponent<TransformComponent>().speed;
+
+	for (auto t : tiles)
+	{
+		t->getComponent<TileComponent>().destRect.x += -(pVel.x * pSpeed);
+		t->getComponent<TileComponent>().destRect.y += -(pVel.y * pSpeed);
+	}
+
+	/*
+	In its simplest form, since this game engine lacked a camera component, 
+	all other objects were moved in inverse proportion to the character to
+	create the impression of a camera effect.
+	*/
+
+	/*
 	for (auto cc : colliders)
 	{
 		Collision::AABB(player.getComponent<ColliderComponent>(), *cc);
-	}
+	}*/
 }
-
-auto& tiles(manager.getGroup(groupMap));
-auto& players(manager.getGroup(groupPlayers));
-auto& enemies(manager.getGroup(groupEnemies));
 
 void Game::render()
 {
 	SDL_RenderClear(renderer);
-	//map->DrawMap();
+	
+	for (auto& t : tiles)
+		t->draw();
 
-	manager.draw();
+	for (auto& p : players)
+		p->draw();
+
+	for (auto& e : enemies)
+		e->draw();
+
+	//manager.draw();
 	SDL_RenderPresent(renderer);
 }
 
@@ -125,9 +150,9 @@ void Game::clean()
 	std::cout << "Game Cleaned" << std::endl;
 }
 
-void Game::AddTile(int id, int x, int y)
+void Game::AddTile(int srcX, int srcY, int xpos, int ypos)
 {
 	auto& tile = manager.addEntity();
-	tile.addComponent<TileComponent>(x, y, 32, 32, id);
+	tile.addComponent<TileComponent>(srcX, srcY, xpos, ypos, mapfile);
 	tile.addGroup(groupMap);
 }

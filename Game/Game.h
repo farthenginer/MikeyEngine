@@ -19,17 +19,16 @@ public:
 	void render();
 	void clean();
 
-	static void AddTile(int id, int x, int y);
+	static void AddTile(int srcX, int srcY, int xpos, int ypos);
 
 	bool running() { return isRunning; };
 
 	static SDL_Renderer* renderer;
 	static SDL_Event event;
 	static std::vector<ColliderComponent*> colliders;
+	static bool isRunning;
 
 private:
-	int cnt = 0;
-	bool isRunning;
 
 	bool up;
 	bool down;

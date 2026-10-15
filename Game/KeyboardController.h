@@ -28,6 +28,8 @@ public:
         bool left = keys[SDL_SCANCODE_A];
         bool right = keys[SDL_SCANCODE_D];
 
+        bool escape = keys[SDL_SCANCODE_ESCAPE]; //escape for exit
+
         transform->velocity.x = 0;
         transform->velocity.y = 0;
 
@@ -82,6 +84,11 @@ public:
             {
                 sprite->Play("bottomIdle");
             }
+        }
+
+        if (escape)
+        {
+            Game::isRunning = false;
         }
     }
 };
