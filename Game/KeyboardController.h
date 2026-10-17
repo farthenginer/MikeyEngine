@@ -28,8 +28,6 @@ public:
         bool left = keys[SDL_SCANCODE_A];
         bool right = keys[SDL_SCANCODE_D];
 
-        bool escape = keys[SDL_SCANCODE_ESCAPE]; //escape for exit
-
         transform->velocity.x = 0;
         transform->velocity.y = 0;
 
@@ -86,9 +84,19 @@ public:
             }
         }
 
-        if (escape)
+        if (Game::event.type == SDL_KEYDOWN)
         {
-            Game::isRunning = false;
+            switch (Game::event.key.keysym.sym)
+            {
+            case SDLK_p:
+                Game::isDebugging = !Game::isDebugging;//debugging flip flop
+                break;
+            
+            case SDLK_ESCAPE:
+                Game::isRunning = false;
+                break;
+            }
         }
+
     }
 };
