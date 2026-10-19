@@ -5,3 +5,4 @@
 #include "../Game/KeyboardController.h"
 #include "../ECS/ColliderComponent.h"
 #include "../ECS/TileComponent.h"
+#include "../ECS/ProjectileComponent.h"

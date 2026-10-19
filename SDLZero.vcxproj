@@ -139,6 +139,7 @@
     <ClCompile Include="Engine\GameObject.cpp" />
     <ClCompile Include="Engine\main.cpp" />
     <ClCompile Include="Game\Map.cpp" />
+    <ClCompile Include="Managers\AssetsManager.cpp" />
     <ClCompile Include="Managers\TextureManager.cpp" />
     <ClCompile Include="Engine\Vector2D.cpp" />
   </ItemGroup>
@@ -150,10 +151,12 @@
     <ClInclude Include="ECS\ECS.h" />
     <ClInclude Include="ECS\TransformComponent.h" />
     <ClInclude Include="ECS\SpriteComponent.h" />
+    <ClInclude Include="ECS\ProjectileComponent.h" />
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Engine\GameObject.h" />
     <ClInclude Include="Game\KeyboardController.h" />
     <ClInclude Include="Game\Map.h" />
+    <ClInclude Include="Managers\AssetsManager.h" />
     <ClInclude Include="Managers\TextureManager.h" />
     <ClInclude Include="ECS\TileComponent.h" />
     <ClInclude Include="Engine\Vector2D.h" />

@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 
+class AssetsManager;   //forward declaration
 class ColliderComponent;
 
 class Game
@@ -26,12 +27,14 @@ public:
 	static bool isRunning;
 	static bool isDebugging;
 	static SDL_Rect camera;
+	static AssetsManager* assets;
 
 	enum groupLabels : std::size_t
 	{
 		groupMap,
 		groupPlayers,
-		groupColliders
+		groupColliders,
+		groupProjectiles
 	};
 
 private:
