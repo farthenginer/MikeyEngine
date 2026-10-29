@@ -94,6 +94,14 @@ public:
 
 	void Play(const char* animName)
 	{
+		if (Game::isPlayerHasAnimation == false)
+		{
+			frames = 0;
+			animIndex = 0;
+			speed = 1;
+			return;
+		}
+
 		frames = animations[animName].frames;
 		animIndex = animations[animName].index;
 		speed = animations[animName].speed;

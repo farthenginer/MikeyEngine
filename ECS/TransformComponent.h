@@ -13,7 +13,7 @@ public:
 	int width = 32;
 	int scale = 1;
 
-	int speed = 5;
+	int speed = 8;
 
 	TransformComponent()
 	{
@@ -46,6 +46,17 @@ public:
 
 	void update() override
 	{
+		if (position.x < 1)
+		{
+			std::cout << "Danger Zone" << std::endl;
+			velocity.x = 1;
+		}
+		if (position.x > 735)
+		{
+			std::cout << "Danger Zone (End)" << std::endl;
+			velocity.x = -1;
+		}
+
 		position.x += velocity.x * speed;
 		position.y += velocity.y * speed;
 	}

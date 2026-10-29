@@ -19,6 +19,7 @@ AssetsManager* Game::assets = new AssetsManager(&manager);
 
 bool Game::isRunning = false;
 bool Game::isDebugging = false;
+bool Game::isPlayerHasAnimation = false;
 
 auto& player(manager.addEntity());
 
@@ -63,30 +64,36 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 	//Create Objects;
 
-	assets->AddTexture("terrain", "assets/tiles/terrain_ss.png");
-	assets->AddTexture("player", "assets/Player/Animations/Movement/Player_Movement.png");
+	assets->AddTexture("terrain", "assets/tiles/breakout.png");
+	assets->AddTexture("player", "assets/Player/bricket.png");
 	assets->AddTexture("projectile", "assets/objects/projectile.png");
+	assets->AddTexture("ball", "assets/objects/ball.png");
 
 	map = new Map("terrain", 3, 32);
 
 	map->LoadMap("assets/tiles/map.map", 25, 20);
 
-	player.addComponent<TransformComponent>(600,555,16,16,4);
-	player.addComponent<SpriteComponent>("player", true);
+	player.addComponent<TransformComponent>(400,500,16,4,4);
+	player.addComponent<SpriteComponent>("player", false);
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("player");
 	player.addGroup(groupPlayers);
 
-	assets->CreateProjectile(Vector2D(400, 400), Vector2D(2,0) , 200, 2, "projectile");
-	assets->CreateProjectile(Vector2D(500, 460), Vector2D(2,-1) , 200, 2, "projectile");
-	assets->CreateProjectile(Vector2D(600, 570), Vector2D(-2,0) , 200, 2, "projectile");
+	isPlayerHasAnimation = false;
+
+
+	//assets->CreateProjectile(Vector2D(400, 400), Vector2D(2,0) , 200, 2, "projectile");
+	//assets->CreateProjectile(Vector2D(500, 460), Vector2D(2,-1) , 200, 2, "projectile");
+	//assets->CreateProjectile(Vector2D(600, 570), Vector2D(-2,0) , 200, 2, "projectile");
+
+	assets->CreateBall(Vector2D(400, 300), Vector2D(0, 0.1), 2, "ball");
 }
 
 
 auto& tiles(manager.getGroup(Game::groupMap));
 auto& players(manager.getGroup(Game::groupPlayers));
 auto& colliders(manager.getGroup(Game::groupColliders));
-auto& projectiles(manager.getGroup(Game::groupProjectiles));
+auto& balls(manager.getGroup(Game::groupBalls));
 
 void Game::handleEvents()
 {
@@ -107,23 +114,33 @@ void Game::update()
 
 	manager.refresh();
 	manager.update();
-
-	for (auto& c : colliders) 
+	
+	for (auto& c : colliders)
 	{
 		SDL_Rect cCol = c->getComponent<ColliderComponent>().collider;
 		if (Collision::AABB(cCol, playerCol))
 		{
 			player.getComponent<TransformComponent>().position = playerPos;
 		}
+
+		
+	}
+	for (auto& p : players)
+	{
+		for (auto& b : balls)
+		{
+			SDL_Rect pCol = p->getComponent<ColliderComponent>().collider;
+			SDL_Rect bCol = b->getComponent<ColliderComponent>().collider;
+			if (Collision::AABB(pCol, bCol))
+			{
+				b->getComponent<TransformComponent>().velocity = b->getComponent<TransformComponent>().velocity * -1;
+				std::cout << "Hit" << std::endl;
+			}
+		}
+		
 	}
 
-	for (auto& p : projectiles)
-	{
-		if (Collision::AABB(player.getComponent<ColliderComponent>().collider, p->getComponent<ColliderComponent>().collider))
-		{
-			p->destroy();
-		}
-	}
+	/* CAMERA FOLLOW
 
 	camera.x = player.getComponent<TransformComponent>().position.x - 400;
 	camera.y = player.getComponent<TransformComponent>().position.y - 320;
@@ -138,6 +155,7 @@ void Game::update()
 		camera.x = camera.w;
 	if (camera.y > camera.h)
 		camera.y = camera.h;
+		*/
 }
 
 void Game::render()
@@ -147,14 +165,16 @@ void Game::render()
 	for (auto& t : tiles)
 		t->draw();
 
-	for (auto& c : colliders)
-		if (isDebugging) c->draw();
+	//for (auto& c : colliders)
+		//if (isDebugging) c->draw();
 
 	for (auto& p : players)
 		p->draw();
 	
-	for (auto& p : projectiles)
-		p->draw();
+	for (auto& c : colliders)
+		c->draw();
+	for (auto& b : balls)
+		b->draw();
 	//manager.draw();
 	SDL_RenderPresent(renderer);
 }

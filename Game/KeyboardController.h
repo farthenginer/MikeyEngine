@@ -31,8 +31,8 @@ public:
         transform->velocity.x = 0;
         transform->velocity.y = 0;
 
-        if (up)    transform->velocity.y = -1;
-        if (down)  transform->velocity.y = 1;
+        if (up)    transform->velocity.y = 0;
+        if (down)  transform->velocity.y = 0;
         if (left)  transform->velocity.x = -1;
         if (right) transform->velocity.x = 1;
 

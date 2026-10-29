@@ -18,6 +18,17 @@ void AssetsManager::CreateProjectile(Vector2D pos, Vector2D vel, int range, int 
 	projectile.addGroup(Game::groupProjectiles);
 }
 
+void AssetsManager::CreateBall(Vector2D pos, Vector2D vel, int speed, std::string id)
+{
+	auto& ball(manager->addEntity());
+	ball.addComponent<TransformComponent>(pos.x, pos.y, 16, 16, 1);
+	ball.addComponent<SpriteComponent>(id, false);
+	ball.addComponent<BallComponent>(speed, vel);
+	ball.addComponent<ColliderComponent>("ball");
+	ball.addGroup(Game::groupBalls);
+}
+
+
 void AssetsManager::AddTexture(std::string id, const char* path)
 {
 	textures.emplace(id, TextureManager::LoadTexture(path));

@@ -6,3 +6,4 @@
 #include "../ECS/ColliderComponent.h"
 #include "../ECS/TileComponent.h"
 #include "../ECS/ProjectileComponent.h"
+#include "../ECS/BallComponent.h"

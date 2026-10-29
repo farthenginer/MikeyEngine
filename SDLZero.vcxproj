@@ -144,6 +144,7 @@
     <ClCompile Include="Engine\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ECS\BallComponent.h" />
     <ClInclude Include="ECS\ColliderComponent.h" />
     <ClInclude Include="Engine\Animation.h" />
     <ClInclude Include="Engine\Collision.h" />

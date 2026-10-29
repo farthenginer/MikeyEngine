@@ -26,6 +26,7 @@ public:
 	static SDL_Event event;
 	static bool isRunning;
 	static bool isDebugging;
+	static bool isPlayerHasAnimation;
 	static SDL_Rect camera;
 	static AssetsManager* assets;
 
@@ -34,7 +35,8 @@ public:
 		groupMap,
 		groupPlayers,
 		groupColliders,
-		groupProjectiles
+		groupProjectiles,
+		groupBalls
 	};
 
 private:
