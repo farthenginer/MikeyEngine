@@ -31,10 +31,10 @@ void AssetsManager::CreateBall(Vector2D pos, Vector2D vel, int speed, std::strin
 void AssetsManager::CreateBrick(Vector2D pos, const char* id)
 {
 	auto& brick(manager->addEntity());
-	brick.addComponent<TransformComponent>(pos.x, pos.y, 32, 8, 2, 0);
+	brick.addComponent<TransformComponent>(pos.x, pos.y, 48, 32, 1, 0);
 	brick.addComponent<SpriteComponent>(id, false);
 	brick.addComponent<BrickComponent>(id);
-	brick.addComponent<ColliderComponent>("brick");
+	brick.addComponent<ColliderComponent>("brick0");
 	brick.addGroup(Game::groupBricks);
 }
 

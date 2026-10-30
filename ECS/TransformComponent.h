@@ -19,7 +19,7 @@ public:
 	{
 		position.zero();
 	}
-	TransformComponent(int sc)
+	TransformComponent(float sc)
 	{
 		position.x = 400;
 		position.y = 320;
@@ -31,7 +31,7 @@ public:
 		position.zero();
 	}
 
-	TransformComponent(float x, float y, int w, int h, int sc, int sp)
+	TransformComponent(float x, float y, int w, int h, float sc, int sp)
 	{
 		position.x = x;
 		position.y = y;
@@ -41,7 +41,7 @@ public:
 		speed = sp;
 	}
 
-	TransformComponent(float x, float y, int w, int h, int sc)
+	TransformComponent(float x, float y, int w, int h, float sc)
 	{
 		position.x = x;
 		position.y = y;
@@ -59,12 +59,10 @@ public:
 	{
 		if (position.x < 1)
 		{
-			std::cout << "Danger Zone" << std::endl;
 			velocity.x = 1;
 		}
 		if (position.x > 735)
 		{
-			std::cout << "Danger Zone (End)" << std::endl;
 			velocity.x = -1;
 		}
 

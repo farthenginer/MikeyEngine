@@ -5,6 +5,7 @@
 #include "../Engine/Vector2D.h"
 #include "../Engine/Collision.h"
 #include "../Managers/AssetsManager.h"
+#include <cstdlib>
 
 //Map* map;
 
@@ -68,14 +69,20 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	assets->AddTexture("player", "assets/Player/bricket2.png");
 	assets->AddTexture("projectile", "assets/objects/projectile.png");
 	assets->AddTexture("ball", "assets/objects/ball2.png");
-	assets->AddTexture("brick", "assets/objects/brick.png"); //change after others
+	
+	assets->AddTexture("brick0", "assets/objects/bricks/brick_0.png");
+	assets->AddTexture("brick1", "assets/objects/bricks/brick_1.png");
+	assets->AddTexture("brick2", "assets/objects/bricks/brick_2.png");
+	assets->AddTexture("brick3", "assets/objects/bricks/brick_3.png");
+	assets->AddTexture("brick4", "assets/objects/bricks/brick_4.png");
+
 	assets->AddTexture("background", "assets/tiles/background.png");
 
 	//map = new Map("terrain", 3, 32);
 
 	//map->LoadMap("assets/tiles/map.map", 25, 20);
 
-	player.addComponent<TransformComponent>(368,500,32,8,4);
+	player.addComponent<TransformComponent>(368,600,32,8,4);
 	player.addComponent<SpriteComponent>("player", false);
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("player");
@@ -92,26 +99,38 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 
 	//Create Bricks
-	int bricksX = 11;
-	int bricksY = 6;
+	int bricksX = 17;
+	int bricksY = 8;
 
-	int spaceX = 70;
+	int spaceX = 49;
+	int spaceY = 32;
 
 	float xPos = 0;
-	float yPos = 16;
+	float yPos = 48;
 
 	for (int y = 0; y < bricksY; y++)
 	{
 		for (int x = 0; x < bricksX; x++)
 		{
-			assets->CreateBrick(Vector2D(xPos, yPos), "brick");
-			std::cout << "XY" << std::endl;
+			//generate random num
+			int randomNum = rand() % 5;
+
+			const char* genId = "brick";
+
+			std::string randNumStr = std::to_string(randomNum);
+
+			std::string idResult = std::string(genId) + randNumStr;
+
+			const char* res = idResult.c_str();
+
+			std::cout << res << std::endl;
+
+			assets->CreateBrick(Vector2D(xPos, yPos), res);
 			xPos += spaceX;
 		}
-		yPos += 24;
+		yPos += spaceY;
 		xPos = 0;
 	}
-
 }
 
 auto& tiles(manager.getGroup(Game::groupMap));
@@ -292,7 +311,7 @@ void Game::render()
 		b->draw();
 
 	for (auto& b : bricks)
-		//b->draw();
+		b->draw();
 
 	//manager.draw();
 	SDL_RenderPresent(renderer);
