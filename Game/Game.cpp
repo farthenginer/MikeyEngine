@@ -6,7 +6,7 @@
 #include "../Engine/Collision.h"
 #include "../Managers/AssetsManager.h"
 
-Map* map;
+//Map* map;
 
 SDL_Renderer* Game::renderer = nullptr;
 
@@ -65,16 +65,17 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	//Create Objects;
 
 	assets->AddTexture("terrain", "assets/tiles/breakout.png");
-	assets->AddTexture("player", "assets/Player/bricket.png");
+	assets->AddTexture("player", "assets/Player/bricket2.png");
 	assets->AddTexture("projectile", "assets/objects/projectile.png");
-	assets->AddTexture("ball", "assets/objects/ball.png");
+	assets->AddTexture("ball", "assets/objects/ball2.png");
 	assets->AddTexture("brick", "assets/objects/brick.png"); //change after others
+	assets->AddTexture("background", "assets/tiles/background.png");
 
-	map = new Map("terrain", 3, 32);
+	//map = new Map("terrain", 3, 32);
 
-	map->LoadMap("assets/tiles/map.map", 25, 20);
+	//map->LoadMap("assets/tiles/map.map", 25, 20);
 
-	player.addComponent<TransformComponent>(368,500,16,4,4);
+	player.addComponent<TransformComponent>(368,500,32,8,4);
 	player.addComponent<SpriteComponent>("player", false);
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("player");
@@ -87,7 +88,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	//assets->CreateProjectile(Vector2D(600, 570), Vector2D(-2,0) , 200, 2, "projectile");
 
 	assets->CreateBall(Vector2D(400, 300), Vector2D(0, 1), 8, "ball");
-
+	assets->CreateBackground(Vector2D(0, 0), "background");
 
 
 	//Create Bricks
@@ -118,6 +119,7 @@ auto& players(manager.getGroup(Game::groupPlayers));
 auto& colliders(manager.getGroup(Game::groupColliders));
 auto& balls(manager.getGroup(Game::groupBalls));
 auto& bricks(manager.getGroup(Game::groupBricks));
+auto& backgrounds(manager.getGroup(Game::groupBackgrounds));
 
 void Game::handleEvents()
 {
@@ -270,7 +272,10 @@ void Game::update()
 void Game::render()
 {
 	SDL_RenderClear(renderer);
-	
+
+	for (auto& b : backgrounds)
+		b->draw();
+
 	for (auto& t : tiles)
 		t->draw();
 
@@ -287,7 +292,7 @@ void Game::render()
 		b->draw();
 
 	for (auto& b : bricks)
-		b->draw();
+		//b->draw();
 
 	//manager.draw();
 	SDL_RenderPresent(renderer);

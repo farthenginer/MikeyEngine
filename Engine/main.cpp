@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
 	int frameTime;
 
 	game = new Game(); //Init Game
-	game->init("Mikey Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 640, false);//Init settings 
+	game->init("Mikey Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 840, 672, false);//Init settings 
 
 	while (game->running()) //Game Loop Check
 	{

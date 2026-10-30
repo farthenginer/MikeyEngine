@@ -37,7 +37,8 @@ public:
 		groupColliders,
 		groupProjectiles,
 		groupBalls,
-		groupBricks
+		groupBricks,
+		groupBackgrounds
 	};
 
 private:

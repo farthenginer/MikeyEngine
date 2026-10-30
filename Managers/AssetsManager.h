@@ -16,6 +16,7 @@ public:
 	void CreateProjectile(Vector2D pos, Vector2D vel, int range, int speed, std::string id);
 	void CreateBall(Vector2D pos, Vector2D vel, int speed, std::string id);
 	void CreateBrick(Vector2D pos ,const char* id);
+	void CreateBackground(Vector2D pos, const char* id);
 
 	//texture management
 	void AddTexture(std::string id, const char* path);
