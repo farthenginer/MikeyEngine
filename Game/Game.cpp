@@ -68,6 +68,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	assets->AddTexture("player", "assets/Player/bricket.png");
 	assets->AddTexture("projectile", "assets/objects/projectile.png");
 	assets->AddTexture("ball", "assets/objects/ball.png");
+	assets->AddTexture("brick", "assets/objects/brick.png"); //change after others
 
 	map = new Map("terrain", 3, 32);
 
@@ -85,13 +86,38 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	//assets->CreateProjectile(Vector2D(500, 460), Vector2D(2,-1) , 200, 2, "projectile");
 	//assets->CreateProjectile(Vector2D(600, 570), Vector2D(-2,0) , 200, 2, "projectile");
 
-	assets->CreateBall(Vector2D(400, 300), Vector2D(0, 0.5), 2, "ball");
+	assets->CreateBall(Vector2D(400, 300), Vector2D(0, 1), 8, "ball");
+
+
+
+	//Create Bricks
+	int bricksX = 11;
+	int bricksY = 6;
+
+	int spaceX = 70;
+
+	float xPos = 0;
+	float yPos = 16;
+
+	for (int y = 0; y < bricksY; y++)
+	{
+		for (int x = 0; x < bricksX; x++)
+		{
+			assets->CreateBrick(Vector2D(xPos, yPos), "brick");
+			std::cout << "XY" << std::endl;
+			xPos += spaceX;
+		}
+		yPos += 24;
+		xPos = 0;
+	}
+
 }
 
 auto& tiles(manager.getGroup(Game::groupMap));
 auto& players(manager.getGroup(Game::groupPlayers));
 auto& colliders(manager.getGroup(Game::groupColliders));
 auto& balls(manager.getGroup(Game::groupBalls));
+auto& bricks(manager.getGroup(Game::groupBricks));
 
 void Game::handleEvents()
 {
@@ -121,7 +147,19 @@ void Game::update()
 			player.getComponent<TransformComponent>().position = playerPos;
 		}
 
-		
+		for (auto& b : balls)
+		{
+			SDL_Rect bCol = b->getComponent<ColliderComponent>().collider;
+			
+			if (Collision::AABB(cCol, bCol))
+			{
+				float xPos = b->getComponent<TransformComponent>().velocity.x;
+				float yPos = b->getComponent<TransformComponent>().velocity.y;
+
+				b->getComponent<TransformComponent>().velocity = Vector2D(-xPos, yPos);
+			}
+		}
+
 	}
 	for (auto& p : players)
 	{
@@ -157,10 +195,54 @@ void Game::update()
 
 				std::cout << result << std::endl;
 				
-				Vector2D newVec = Vector2D::Vector2D(-result, -0.5);
+				Vector2D newVec = Vector2D::Vector2D(-result, -1);
 
 				b->getComponent<TransformComponent>().velocity = newVec;
 
+				//std::cout << pVec.x - bVec.x << std::endl;
+			}
+		}
+		
+	}
+	for (auto& p : balls)
+	{
+		for (auto& b : bricks)
+		{
+			SDL_Rect pCol = p->getComponent<ColliderComponent>().collider;
+			SDL_Rect bCol = b->getComponent<ColliderComponent>().collider;
+
+			if (Collision::AABB(pCol, bCol))
+			{
+				std::cout << "Brick Hit" << std::endl;
+
+				Vector2D pVec = b->getComponent<TransformComponent>().position;
+				Vector2D bVec = p->getComponent<TransformComponent>().position;
+
+				//std::cout << "Player : " << pVec << "\n" << "Ball" << bVec << std::endl;
+
+				int calculatedX = pVec.x - bVec.x;
+
+				if (calculatedX < -32)
+				{
+					//std::cout << "Right" << std::endl;
+				}
+				else if (calculatedX > -32)
+				{
+					//std::cout << "Left" << std::endl;
+				}
+				else if (calculatedX == -32)
+				{
+					//std::cout << "Mid" << std::endl;
+				}
+
+				float result = calculatedX / 80.0f + 0.4f;
+
+				std::cout << result << std::endl;
+				
+				Vector2D newVec = Vector2D::Vector2D(-result, 1);
+
+				p->getComponent<TransformComponent>().velocity = newVec;
+				b->getComponent<BrickComponent>().entity->destroy();
 				//std::cout << pVec.x - bVec.x << std::endl;
 			}
 		}
@@ -203,6 +285,10 @@ void Game::render()
 
 	for (auto& b : balls)
 		b->draw();
+
+	for (auto& b : bricks)
+		b->draw();
+
 	//manager.draw();
 	SDL_RenderPresent(renderer);
 }

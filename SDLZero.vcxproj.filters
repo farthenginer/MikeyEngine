@@ -98,5 +98,8 @@
     <ClInclude Include="ECS\BallComponent.h">
       <Filter>Üst Bilgi Dosyaları</Filter>
     </ClInclude>
+    <ClInclude Include="ECS\BrickComponent.h">
+      <Filter>Üst Bilgi Dosyaları</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

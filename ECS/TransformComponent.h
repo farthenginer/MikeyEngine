@@ -13,7 +13,7 @@ public:
 	int width = 32;
 	int scale = 1;
 
-	int speed = 8;
+	int speed = 12;
 
 	TransformComponent()
 	{
@@ -29,7 +29,18 @@ public:
 	TransformComponent(float x, float y)
 	{
 		position.zero();
-	}	
+	}
+
+	TransformComponent(float x, float y, int w, int h, int sc, int sp)
+	{
+		position.x = x;
+		position.y = y;
+		width = w;
+		height = h;
+		scale = sc;
+		speed = sp;
+	}
+
 	TransformComponent(float x, float y, int w, int h, int sc)
 	{
 		position.x = x;
