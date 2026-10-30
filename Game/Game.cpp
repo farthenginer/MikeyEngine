@@ -7,7 +7,7 @@
 #include "../Managers/AssetsManager.h"
 #include <cstdlib>
 
-//Map* map;
+Map* map;
 
 SDL_Renderer* Game::renderer = nullptr;
 
@@ -78,9 +78,9 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 	assets->AddTexture("background", "assets/tiles/background.png");
 
-	//map = new Map("terrain", 3, 32);
+	map = new Map("terrain", 3, 32);
 
-	//map->LoadMap("assets/tiles/map.map", 25, 20);
+    map->LoadMap("assets/tiles/map.map", 25, 20);
 
 	player.addComponent<TransformComponent>(368,600,32,8,4);
 	player.addComponent<SpriteComponent>("player", false);
@@ -167,7 +167,7 @@ void Game::update()
 		{
 			player.getComponent<TransformComponent>().position = playerPos;
 		}
-
+		/*
 		for (auto& b : balls)
 		{
 			SDL_Rect bCol = b->getComponent<ColliderComponent>().collider;
@@ -179,7 +179,7 @@ void Game::update()
 
 				b->getComponent<TransformComponent>().velocity = Vector2D(-xPos, yPos);
 			}
-		}
+		}*/
 
 	}
 	for (auto& p : players)
@@ -247,10 +247,12 @@ void Game::update()
 				{
 					//std::cout << "Right" << std::endl;
 				}
+
 				else if (calculatedX > -32)
 				{
 					//std::cout << "Left" << std::endl;
 				}
+
 				else if (calculatedX == -32)
 				{
 					//std::cout << "Mid" << std::endl;
@@ -260,7 +262,7 @@ void Game::update()
 
 				std::cout << result << std::endl;
 				
-				Vector2D newVec = Vector2D::Vector2D(-result, 1);
+				Vector2D newVec = Vector2D::Vector2D(-result, p->getComponent<TransformComponent>().velocity.y * -1);
 
 				p->getComponent<TransformComponent>().velocity = newVec;
 				b->getComponent<BrickComponent>().entity->destroy();
@@ -269,6 +271,16 @@ void Game::update()
 		}
 		
 	}
+	/*
+	if (player.getComponent<TransformComponent>().position.x < 1)
+	{
+		player.getComponent<TransformComponent>().velocity.x = 1;
+	}
+	if (player.getComponent<TransformComponent>().position.x > 712)
+	{
+		player.getComponent<TransformComponent>().velocity.x = -1;
+	}
+	*/
 
 	/* CAMERA FOLLOW
 
@@ -296,7 +308,7 @@ void Game::render()
 		b->draw();
 
 	for (auto& t : tiles)
-		t->draw();
+		//t->draw();
 
 	for (auto& c : colliders)
 		c->draw();

@@ -57,14 +57,16 @@ public:
 
 	void update() override
 	{
+		/*
 		if (position.x < 1)
 		{
 			velocity.x = 1;
 		}
-		if (position.x > 735)
+		if (position.x > 839)
 		{
 			velocity.x = -1;
 		}
+		*/
 
 		position.x += velocity.x * speed;
 		position.y += velocity.y * speed;

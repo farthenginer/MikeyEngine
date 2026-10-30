@@ -21,7 +21,7 @@ void AssetsManager::CreateProjectile(Vector2D pos, Vector2D vel, int range, int 
 void AssetsManager::CreateBall(Vector2D pos, Vector2D vel, int speed, std::string id)
 {
 	auto& ball(manager->addEntity());
-	ball.addComponent<TransformComponent>(pos.x, pos.y, 8, 8, 3, speed);
+	ball.addComponent<TransformComponent>(pos.x, pos.y, 8, 8, 2, speed);
 	ball.addComponent<SpriteComponent>(id, false);
 	ball.addComponent<BallComponent>(speed, vel);
 	ball.addComponent<ColliderComponent>("ball");

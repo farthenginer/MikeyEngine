@@ -31,10 +31,13 @@ public:
         transform->velocity.x = 0;
         transform->velocity.y = 0;
 
+        bool minThresholdX = transform->position.x - 1 > 0;
+        bool maxThresholdX = transform->position.x + 1 < 712;
+
         if (up)    transform->velocity.y = 0;
         if (down)  transform->velocity.y = 0;
-        if (left)  transform->velocity.x = -1;
-        if (right) transform->velocity.x = 1;
+        if (left && minThresholdX)  transform->velocity.x = -1;
+        if (right && maxThresholdX) transform->velocity.x = 1;
 
         if (up)
         {
@@ -62,7 +65,7 @@ public:
         {
             lastDirection = "side";
 
-            sprite->spriteFlip = SDL_FLIP_HORIZONTAL;
+            sprite->spriteFlip = SDL_FLIP_NONE;
             sprite->Play("sideRun");
         }
 
