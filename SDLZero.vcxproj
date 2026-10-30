@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ECS\BallComponent.cpp" />
     <ClCompile Include="Engine\Collision.cpp" />
     <ClCompile Include="ECS\ECS.cpp" />
     <ClCompile Include="Game\Game.cpp" />

@@ -73,7 +73,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 	map->LoadMap("assets/tiles/map.map", 25, 20);
 
-	player.addComponent<TransformComponent>(400,500,16,4,4);
+	player.addComponent<TransformComponent>(368,500,16,4,4);
 	player.addComponent<SpriteComponent>("player", false);
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("player");
@@ -81,14 +81,12 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 	isPlayerHasAnimation = false;
 
-
 	//assets->CreateProjectile(Vector2D(400, 400), Vector2D(2,0) , 200, 2, "projectile");
 	//assets->CreateProjectile(Vector2D(500, 460), Vector2D(2,-1) , 200, 2, "projectile");
 	//assets->CreateProjectile(Vector2D(600, 570), Vector2D(-2,0) , 200, 2, "projectile");
 
-	assets->CreateBall(Vector2D(400, 300), Vector2D(0, 0.1), 2, "ball");
+	assets->CreateBall(Vector2D(400, 300), Vector2D(0, 0.5), 2, "ball");
 }
-
 
 auto& tiles(manager.getGroup(Game::groupMap));
 auto& players(manager.getGroup(Game::groupPlayers));
@@ -133,8 +131,37 @@ void Game::update()
 			SDL_Rect bCol = b->getComponent<ColliderComponent>().collider;
 			if (Collision::AABB(pCol, bCol))
 			{
-				b->getComponent<TransformComponent>().velocity = b->getComponent<TransformComponent>().velocity * -1;
 				std::cout << "Hit" << std::endl;
+
+				Vector2D pVec = p->getComponent<TransformComponent>().position;
+				Vector2D bVec = b->getComponent<TransformComponent>().position;
+
+				//std::cout << "Player : " << pVec << "\n" << "Ball" << bVec << std::endl;
+
+				int calculatedX = pVec.x - bVec.x;
+
+				if (calculatedX < -32)
+				{
+					//std::cout << "Right" << std::endl;
+				}
+				else if (calculatedX > -32)
+				{
+					//std::cout << "Left" << std::endl;
+				}
+				else if (calculatedX == -32)
+				{
+					//std::cout << "Mid" << std::endl;
+				}
+
+				float result = calculatedX / 80.0f + 0.4f;
+
+				std::cout << result << std::endl;
+				
+				Vector2D newVec = Vector2D::Vector2D(-result, -0.5);
+
+				b->getComponent<TransformComponent>().velocity = newVec;
+
+				//std::cout << pVec.x - bVec.x << std::endl;
 			}
 		}
 		
@@ -165,14 +192,15 @@ void Game::render()
 	for (auto& t : tiles)
 		t->draw();
 
-	//for (auto& c : colliders)
-		//if (isDebugging) c->draw();
+	for (auto& c : colliders)
+		c->draw();
 
 	for (auto& p : players)
 		p->draw();
 	
 	for (auto& c : colliders)
 		c->draw();
+
 	for (auto& b : balls)
 		b->draw();
 	//manager.draw();
