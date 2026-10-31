@@ -97,10 +97,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>M:\old_tnt\Downloads\SDL2-devel-2.30.8-VC\SDL2-2.30.8\include;M:\old_tnt\Downloads\SDL2_ttf-devel-2.24.0-VC\SDL2_ttf-2.24.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>M:\old_tnt\Downloads\SDL2-devel-2.30.8-VC\SDL2-2.30.8\lib\x64;M:\old_tnt\Downloads\SDL2_ttf-devel-2.24.0-VC\SDL2_ttf-2.24.0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -126,10 +128,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>M:\old_tnt\Downloads\SDL2_mixer-devel-2.8.2-VC\SDL2_mixer-2.8.2\include;M:\old_tnt\Downloads\Dev\Dev\SDL2_image-2.0.1\include;M:\old_tnt\Downloads\SDL2-devel-2.30.8-VC\SDL2-2.30.8\include;M:\old_tnt\Downloads\SDL2_ttf-devel-2.24.0-VC\SDL2_ttf-2.24.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>M:\old_tnt\Downloads\SDL2_mixer-devel-2.8.2-VC\SDL2_mixer-2.8.2\lib\x64;M:\old_tnt\Downloads\Dev\Dev\SDL2_image-2.0.1\lib\x64;M:\old_tnt\Downloads\SDL2-devel-2.30.8-VC\SDL2-2.30.8\lib\x64;M:\old_tnt\Downloads\SDL2_ttf-devel-2.24.0-VC\SDL2_ttf-2.24.0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

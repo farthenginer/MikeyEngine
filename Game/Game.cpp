@@ -29,6 +29,15 @@ float Game::deltaTime = 0.0f;
 
 auto& player(manager.addEntity());
 
+//sounds
+//sounds
+Mix_Chunk* Game::brickSound = nullptr;
+Mix_Chunk* Game::hitPlayerSound = nullptr;
+Mix_Chunk* Game::newBallSound = nullptr;
+Mix_Chunk* Game::scoreUpSound = nullptr;
+Mix_Chunk* Game::loseBallSound = nullptr;
+Mix_Chunk* Game::hitWallSound = nullptr;
+
 Game::Game()
 {
 }
@@ -39,6 +48,7 @@ Game ::~Game()
 void Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullScreen)
 {
 	//initialize
+	//SDL_Init(SDL_INIT_AUDIO);
 
 	int flags = 0;
 	if (fullScreen)
@@ -66,7 +76,22 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		if (!font)
 			std::cout << "Font error: " << TTF_GetError() << std::endl;
 
-		isRunning = true;
+		if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+			std::cout << "Mix_OpenAudio error: " << Mix_GetError() << std::endl;
+
+		brickSound = Mix_LoadWAV("assets/sounds/BreakOut.wav");
+		hitPlayerSound = Mix_LoadWAV("assets/sounds/HitPlayer.wav");
+		newBallSound = Mix_LoadWAV("assets/sounds/NewBall.wav");
+		scoreUpSound = Mix_LoadWAV("assets/sounds/NewScore.wav");
+		loseBallSound = Mix_LoadWAV("assets/sounds/LoseBall.wav");
+		hitWallSound = Mix_LoadWAV("assets/sounds/HitWall.wav");
+
+		//if (!brickSound)     std::cout << "BreakOut.wav error: " << Mix_GetError() << std::endl;
+		//if (!hitPlayerSound) std::cout << "HitPlayer.wav error: " << Mix_GetError() << std::endl;
+		//if (!newBallSound)   std::cout << "NewBall.wav error: " << Mix_GetError() << std::endl;
+		//if (!scoreUpSound)   std::cout << "NewScore.wav error: " << Mix_GetError() << std::endl;
+
+		Mix_VolumeMusic(64);		isRunning = true;
 
 	}
 	else
@@ -235,6 +260,7 @@ void Game::update()
 				Vector2D newVec = Vector2D::Vector2D(-result, -1);
 
 				b->getComponent<TransformComponent>().velocity = newVec;
+				Mix_PlayChannel(-1, hitPlayerSound, 0);
 
 				//std::cout << pVec.x - bVec.x << std::endl;
 			}
@@ -290,7 +316,14 @@ void Game::update()
 				b->getComponent<BrickComponent>().entity->destroy();
 
 				score++;
+				if (score % 100 == 0)
+				{
+					Mix_PlayChannel(-1, scoreUpSound, 0);
+				}
 				scoreChanged = true;
+
+				Mix_PlayChannel(-1, brickSound, 0);
+
 				//std::cout << pVec.x - bVec.x << std::endl;
 
 				break;
@@ -377,7 +410,7 @@ void Game::render()
 
 	if (scoreTexture)
 	{
-		SDL_Rect dst = { (800 - scoreW) / 2, 8, scoreW, scoreH };  // üst orta
+		SDL_Rect dst = { (800 - scoreW) / 2, 8, scoreW, scoreH };
 		SDL_RenderCopy(renderer, scoreTexture, nullptr, &dst);
 	}
 
@@ -408,9 +441,25 @@ void Game::clean()
 {
 	if (scoreTexture) SDL_DestroyTexture(scoreTexture);
 	if (font) TTF_CloseFont(font);
+
+	Mix_FreeChunk(brickSound);
+	Mix_FreeChunk(hitPlayerSound);
+	Mix_FreeChunk(newBallSound);
+	Mix_FreeChunk(scoreUpSound);
+	Mix_FreeChunk(loseBallSound);
+	Mix_FreeChunk(hitWallSound);
+
+	Mix_CloseAudio();
+	Mix_Quit();
+
 	TTF_Quit();
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 	std::cout << "Game Cleaned" << std::endl;
+}
+
+void Game::playSound(Mix_Chunk* sound)
+{
+	if (sound) Mix_PlayChannel(-1, sound, 0);
 }

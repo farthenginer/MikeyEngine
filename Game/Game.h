@@ -3,6 +3,7 @@
 #include "SDL.h"
 #include <SDL_ttf.h>
 #include "SDL_image.h"
+#include <SDL_mixer.h>
 #include <iostream>
 #include <vector>
 
@@ -21,6 +22,8 @@ public:
 	void render();
 	void clean();
 
+	static void playSound(Mix_Chunk* sound);
+
 	bool running() { return isRunning; };
 
 	static SDL_Renderer* renderer;
@@ -32,6 +35,14 @@ public:
 	static AssetsManager* assets;
 	Uint64 lastFrameTime = 0;
 	static float deltaTime;
+
+	static Mix_Chunk* brickSound;
+	static Mix_Chunk* hitPlayerSound;
+	static Mix_Chunk* newBallSound;
+	static Mix_Chunk* scoreUpSound;
+	static Mix_Chunk* loseBallSound;
+	static Mix_Chunk* hitWallSound;
+
 	enum groupLabels : std::size_t
 	{
 		groupMap,

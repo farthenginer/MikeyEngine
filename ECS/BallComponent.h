@@ -38,26 +38,33 @@ public:
 		}
 		*/
 
-		if (transform->position.x < 1)
+		if (transform->position.x < 1 && transform->velocity.x <= 0)
 		{
 			transform->velocity.x = 1;
+			PlayHitWallSound();
 		}
-		if (transform->position.x > 808)
+		if (transform->position.x > 808 && transform->velocity.x >= 0)
 		{
 			transform->velocity.x = -1;
+			PlayHitWallSound();
+		}
+		if (transform->position.y < 0 && transform->velocity.y <= 0)
+		{
+			transform->velocity.y = 1;
+			PlayHitWallSound();
 		}
 		if (transform->position.y > 671)
 		{
 			entity->getComponent<BallComponent>().CreateNewBall();
+			entity->getComponent<BallComponent>().PlayLoseBallSound();
 			entity->destroy();
 		}
-		if (transform->position.y < 0)
-		{
-			transform->velocity.y = 1;
-		}
+
 	}
 
 	static void CreateNewBall();
+	static void PlayHitWallSound();
+	static void PlayLoseBallSound();
 
 private:
 	TransformComponent* transform;
