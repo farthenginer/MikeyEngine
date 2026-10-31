@@ -37,6 +37,7 @@ Mix_Chunk* Game::newBallSound = nullptr;
 Mix_Chunk* Game::scoreUpSound = nullptr;
 Mix_Chunk* Game::loseBallSound = nullptr;
 Mix_Chunk* Game::hitWallSound = nullptr;
+Mix_Chunk* Game::bonusBallSound = nullptr;
 
 Game::Game()
 {
@@ -85,6 +86,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		scoreUpSound = Mix_LoadWAV("assets/sounds/NewScore.wav");
 		loseBallSound = Mix_LoadWAV("assets/sounds/LoseBall.wav");
 		hitWallSound = Mix_LoadWAV("assets/sounds/HitWall.wav");
+		bonusBallSound = Mix_LoadWAV("assets/sounds/BonusBall.wav");
 
 		//if (!brickSound)     std::cout << "BreakOut.wav error: " << Mix_GetError() << std::endl;
 		//if (!hitPlayerSound) std::cout << "HitPlayer.wav error: " << Mix_GetError() << std::endl;
@@ -111,6 +113,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	assets->AddTexture("brick2", "assets/objects/bricks/brick_2.png");
 	assets->AddTexture("brick3", "assets/objects/bricks/brick_3.png");
 	assets->AddTexture("brick4", "assets/objects/bricks/brick_4.png");
+	assets->AddTexture("brick_bonus", "assets/objects/bricks/brick_bonus.png");
 
 	assets->AddTexture("background", "assets/tiles/background.png");
 
@@ -130,7 +133,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	//assets->CreateProjectile(Vector2D(500, 460), Vector2D(2,-1) , 200, 2, "projectile");
 	//assets->CreateProjectile(Vector2D(600, 570), Vector2D(-2,0) , 200, 2, "projectile");
 
-	assets->CreateBall(Vector2D(400, 300), Vector2D(0, 1), 8, "ball");
+	assets->CreateBall(Vector2D(400, 500), Vector2D(0, 1), 8, "ball", true);
 	assets->CreateBackground(Vector2D(0, 0), "background");
 
 
@@ -150,22 +153,34 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	{
 		xPos = paddingX;
 
+
 		for (int x = 0; x < bricksX; x++)
 		{
+
+			int randomBonus = rand() % 11;
+
+			if (randomBonus != 1)
+			{
+				int randomNum = rand() % 5;
+
+				const char* genId = "brick";
+
+				std::string randNumStr = std::to_string(randomNum);
+
+				std::string idResult = std::string(genId) + randNumStr;
+
+				const char* res = idResult.c_str();
+				assets->CreateBrick(Vector2D(xPos, yPos), res, false);
+
+				std::cout << res << std::endl;
+			}
+			else
+			{
+				assets->CreateBrick(Vector2D(xPos, yPos), "brick_bonus", true);
+			}
+
 			//generate random num
-			int randomNum = rand() % 5;
 
-			const char* genId = "brick";	
-
-			std::string randNumStr = std::to_string(randomNum);
-
-			std::string idResult = std::string(genId) + randNumStr;
-
-			const char* res = idResult.c_str();
-
-			std::cout << res << std::endl;
-
-			assets->CreateBrick(Vector2D(xPos, yPos), res);
 			xPos += spaceX;
 		}
 
@@ -313,6 +328,14 @@ void Game::update()
 					b->getComponent<TransformComponent>().position.y + b->getComponent<TransformComponent>().height / 2,
 					SDL_Color{ 255, 255, 255, 255 }
 				);
+
+				if (b->getComponent<BrickComponent>().isBonus == true)
+				{
+					assets->CreateBall(Vector2D(400, 300), Vector2D(0, 1), 8, "ball", false);
+					//play sfx
+					Mix_PlayChannel(-1, bonusBallSound, 0);
+				}
+
 				b->getComponent<BrickComponent>().entity->destroy();
 
 				score++;

@@ -10,7 +10,7 @@
 class BallComponent : public Component
 {
 public:
-	BallComponent(int sp, Vector2D vel) : speed(sp), velocity(vel)
+	BallComponent(int sp, Vector2D vel, bool isMainBall) : speed(sp), velocity(vel), isMainBall(isMainBall)
 	{
 
 	}
@@ -55,14 +55,14 @@ public:
 		}
 		if (transform->position.y > 671)
 		{
-			entity->getComponent<BallComponent>().CreateNewBall();
+			if(isMainBall) entity->getComponent<BallComponent>().CreateNewBall(true);
 			entity->getComponent<BallComponent>().PlayLoseBallSound();
 			entity->destroy();
 		}
 
 	}
 
-	static void CreateNewBall();
+	static void CreateNewBall(bool create);
 	static void PlayHitWallSound();
 	static void PlayLoseBallSound();
 
@@ -70,6 +70,8 @@ private:
 	TransformComponent* transform;
 
 	int speed = 0;
+
+	bool isMainBall;
 
 	Vector2D velocity;
 	Vector2D direction;

@@ -42,6 +42,7 @@ public:
 	static Mix_Chunk* scoreUpSound;
 	static Mix_Chunk* loseBallSound;
 	static Mix_Chunk* hitWallSound;
+	static Mix_Chunk* bonusBallSound;
 
 	enum groupLabels : std::size_t
 	{

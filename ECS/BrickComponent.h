@@ -29,7 +29,9 @@ public:
 	{
 
 	}
+	bool isBonus;
 
 private:
 	TransformComponent* transform;
+
 };
