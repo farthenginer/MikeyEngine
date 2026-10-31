@@ -1,4 +1,6 @@
 M:\SDL_Projects\MikeyEngine\ECS\BallComponent.cpp;M:\SDL_Projects\MikeyEngine\SDLZero\Debug\BallComponent.obj
+M:\SDL_Projects\MikeyEngine\ECS\ParticleComponent.cpp;M:\SDL_Projects\MikeyEngine\SDLZero\Debug\ParticleComponent.obj
+M:\SDL_Projects\MikeyEngine\ECS\TrailComponent.cpp;M:\SDL_Projects\MikeyEngine\SDLZero\Debug\TrailComponent.obj
 M:\SDL_Projects\MikeyEngine\Engine\Collision.cpp;M:\SDL_Projects\MikeyEngine\SDLZero\Debug\Collision.obj
 M:\SDL_Projects\MikeyEngine\ECS\ECS.cpp;M:\SDL_Projects\MikeyEngine\SDLZero\Debug\ECS.obj
 M:\SDL_Projects\MikeyEngine\Game\Game.cpp;M:\SDL_Projects\MikeyEngine\SDLZero\Debug\Game.obj

@@ -25,6 +25,7 @@ void AssetsManager::CreateBall(Vector2D pos, Vector2D vel, int speed, std::strin
 	ball.addComponent<SpriteComponent>(id, false);
 	ball.addComponent<BallComponent>(speed, vel);
 	ball.addComponent<ColliderComponent>("ball");
+	ball.addComponent<TrailComponent>();
 	ball.addGroup(Game::groupBalls);
 }
 

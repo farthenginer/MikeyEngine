@@ -134,6 +134,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ECS\BallComponent.cpp" />
+    <ClCompile Include="ECS\ParticleComponent.cpp" />
+    <ClCompile Include="ECS\TrailComponent.cpp" />
     <ClCompile Include="Engine\Collision.cpp" />
     <ClCompile Include="ECS\ECS.cpp" />
     <ClCompile Include="Game\Game.cpp" />
@@ -148,6 +150,9 @@
     <ClInclude Include="ECS\BallComponent.h" />
     <ClInclude Include="ECS\BrickComponent.h" />
     <ClInclude Include="ECS\ColliderComponent.h" />
+    <ClInclude Include="ECS\Particle.h" />
+    <ClInclude Include="ECS\ParticleComponent.h" />
+    <ClInclude Include="ECS\TrailComponent.h" />
     <ClInclude Include="Engine\Animation.h" />
     <ClInclude Include="Engine\Collision.h" />
     <ClInclude Include="Engine\Components.h" />

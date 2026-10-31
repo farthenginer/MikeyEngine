@@ -8,3 +8,5 @@
 #include "../ECS/ProjectileComponent.h"
 #include "../ECS/BallComponent.h"
 #include "../ECS/BrickComponent.h"
+#include "../ECS/ParticleComponent.h"
+#include "../ECS/TrailComponent.h"

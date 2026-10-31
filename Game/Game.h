@@ -30,7 +30,8 @@ public:
 	static bool isPlayerHasAnimation;
 	static SDL_Rect camera;
 	static AssetsManager* assets;
-
+	Uint64 lastFrameTime = 0;
+	static float deltaTime;
 	enum groupLabels : std::size_t
 	{
 		groupMap,

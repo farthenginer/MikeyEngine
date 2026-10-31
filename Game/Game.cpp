@@ -19,9 +19,13 @@ SDL_Rect Game::camera = {0,0,800,640};
 
 AssetsManager* Game::assets = new AssetsManager(&manager);
 
+ParticleComponent particleSystem;
+
 bool Game::isRunning = false;
 bool Game::isDebugging = false;
 bool Game::isPlayerHasAnimation = false;
+
+float Game::deltaTime = 0.0f;
 
 auto& player(manager.addEntity());
 
@@ -58,7 +62,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		if (TTF_Init() == -1)
 			std::cout << "TTF_Init error: " << TTF_GetError() << std::endl;
 
-		font = TTF_OpenFont("terminal.ttf", 28);
+		font = TTF_OpenFont("terminal.ttf", 48);
 		if (!font)
 			std::cout << "Font error: " << TTF_GetError() << std::endl;
 
@@ -106,10 +110,10 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 
 	//Create Bricks
-	int bricksX = 15;
+	int bricksX = 14;
 	int bricksY = 8;
 
-	int paddingX = 32;
+	int paddingX = 56;
 
 	int spaceX = 52;
 	int spaceY = 36;
@@ -277,7 +281,14 @@ void Game::update()
 				Vector2D newVec = Vector2D::Vector2D(-result, p->getComponent<TransformComponent>().velocity.y * -1);
 
 				p->getComponent<TransformComponent>().velocity = newVec;
+
+				particleSystem.Emit(
+					b->getComponent<TransformComponent>().position.x + b->getComponent<TransformComponent>().width / 2,
+					b->getComponent<TransformComponent>().position.y + b->getComponent<TransformComponent>().height / 2,
+					SDL_Color{ 255, 255, 255, 255 }
+				);
 				b->getComponent<BrickComponent>().entity->destroy();
+
 				score++;
 				scoreChanged = true;
 				//std::cout << pVec.x - bVec.x << std::endl;
@@ -314,6 +325,19 @@ void Game::update()
 	if (camera.y > camera.h)
 		camera.y = camera.h;
 		*/
+	Uint64 currentTime = SDL_GetPerformanceCounter();
+
+	Game::deltaTime = 0.0f;
+
+	if (lastFrameTime != 0)
+	{
+		Game::deltaTime = (float)(currentTime - lastFrameTime)
+			/ SDL_GetPerformanceFrequency();
+	}
+
+	lastFrameTime = currentTime;
+
+	particleSystem.Update(Game::deltaTime);
 }
 
 void Game::render()
@@ -340,6 +364,8 @@ void Game::render()
 
 	for (auto& b : bricks)
 		b->draw();
+
+	particleSystem.Render(renderer);
 
 	//manager.draw();
 
