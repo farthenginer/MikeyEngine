@@ -80,13 +80,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>M:\old_tnt\Downloads\SDL2-devel-2.0.5-VC\SDL2\include;M:\old_tnt\Downloads\Dev\Dev\SDL2_image-2.0.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>M:\old_tnt\Downloads\SDL2_ttf-devel-2.24.0-VC\SDL2_ttf-2.24.0\include;M:\old_tnt\Downloads\SDL2-devel-2.30.8-VC\SDL2-2.30.8\include;M:\old_tnt\Downloads\Dev\Dev\SDL2_image-2.0.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>M:\old_tnt\Downloads\SDL2-devel-2.0.5-VC\SDL2\lib\x86;M:\old_tnt\Downloads\Dev\Dev\SDL2_image-2.0.1\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>M:\old_tnt\Downloads\SDL2_ttf-devel-2.24.0-VC\SDL2_ttf-2.24.0\lib\x86;M:\old_tnt\Downloads\SDL2-devel-2.30.8-VC\SDL2-2.30.8\lib\x86;M:\old_tnt\Downloads\Dev\Dev\SDL2_image-2.0.1\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -163,6 +163,9 @@
     <ClInclude Include="Managers\TextureManager.h" />
     <ClInclude Include="ECS\TileComponent.h" />
     <ClInclude Include="Engine\Vector2D.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="..\..\old_tnt\Downloads\terminal.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

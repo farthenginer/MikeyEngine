@@ -6,6 +6,7 @@
 #include "../Engine/Collision.h"
 #include "../Managers/AssetsManager.h"
 #include <cstdlib>
+#include <cstdio>
 
 Map* map;
 
@@ -54,6 +55,12 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 			std::cout << "Renderer Created!" << std::endl;
 		}
+		if (TTF_Init() == -1)
+			std::cout << "TTF_Init error: " << TTF_GetError() << std::endl;
+
+		font = TTF_OpenFont("terminal.ttf", 28);
+		if (!font)
+			std::cout << "Font error: " << TTF_GetError() << std::endl;
 
 		isRunning = true;
 
@@ -99,23 +106,27 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 
 	//Create Bricks
-	int bricksX = 17;
+	int bricksX = 15;
 	int bricksY = 8;
 
-	int spaceX = 49;
-	int spaceY = 32;
+	int paddingX = 32;
+
+	int spaceX = 52;
+	int spaceY = 36;
 
 	float xPos = 0;
 	float yPos = 48;
 
 	for (int y = 0; y < bricksY; y++)
 	{
+		xPos = paddingX;
+
 		for (int x = 0; x < bricksX; x++)
 		{
 			//generate random num
 			int randomNum = rand() % 5;
 
-			const char* genId = "brick";
+			const char* genId = "brick";	
 
 			std::string randNumStr = std::to_string(randomNum);
 
@@ -128,8 +139,9 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 			assets->CreateBrick(Vector2D(xPos, yPos), res);
 			xPos += spaceX;
 		}
+
 		yPos += spaceY;
-		xPos = 0;
+		xPos = paddingX;
 	}
 }
 
@@ -266,7 +278,11 @@ void Game::update()
 
 				p->getComponent<TransformComponent>().velocity = newVec;
 				b->getComponent<BrickComponent>().entity->destroy();
+				score++;
+				scoreChanged = true;
 				//std::cout << pVec.x - bVec.x << std::endl;
+
+				break;
 			}
 		}
 		
@@ -326,13 +342,49 @@ void Game::render()
 		b->draw();
 
 	//manager.draw();
+
+	if (scoreChanged)
+	{
+		updateScoreTexture();
+		scoreChanged = false;
+	}
+
+	if (scoreTexture)
+	{
+		SDL_Rect dst = { (800 - scoreW) / 2, 8, scoreW, scoreH };  // üst orta
+		SDL_RenderCopy(renderer, scoreTexture, nullptr, &dst);
+	}
+
 	SDL_RenderPresent(renderer);
+}
+
+void Game::updateScoreTexture()
+{
+	if (!font) return;
+
+	if (scoreTexture)
+		SDL_DestroyTexture(scoreTexture);
+
+	char buf[16];
+	snprintf(buf, sizeof(buf), "%03d", score);   //000, 001, 002 etc.
+
+	SDL_Color white = { 255, 255, 255, 255 };
+	SDL_Surface* surf = TTF_RenderText_Blended(font, buf, white);
+	if (!surf) return;
+
+	scoreW = surf->w;
+	scoreH = surf->h;
+	scoreTexture = SDL_CreateTextureFromSurface(renderer, surf);
+	SDL_FreeSurface(surf);
 }
 
 void Game::clean()
 {
-	SDL_DestroyWindow(window);
+	if (scoreTexture) SDL_DestroyTexture(scoreTexture);
+	if (font) TTF_CloseFont(font);
+	TTF_Quit();
 	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
 	SDL_Quit();
 	std::cout << "Game Cleaned" << std::endl;
 }

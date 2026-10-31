@@ -1,6 +1,7 @@
 #ifndef Game_hpp
 #define Game_hpp
 #include "SDL.h"
+#include <SDL_ttf.h>
 #include "SDL_image.h"
 #include <iostream>
 #include <vector>
@@ -49,5 +50,13 @@ private:
 	bool left;
 
 	SDL_Window* window;
+
+	int score = 0;
+	bool scoreChanged = true;
+	TTF_Font* font = nullptr;
+	SDL_Texture* scoreTexture = nullptr;
+	int scoreW = 0, scoreH = 0;
+
+	void updateScoreTexture();
 };
 #endif // !Game_hpp
