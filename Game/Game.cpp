@@ -24,6 +24,7 @@ ParticleComponent particleSystem;
 bool Game::isRunning = false;
 bool Game::isDebugging = false;
 bool Game::isPlayerHasAnimation = false;
+bool Game::gameIsStarted = false;
 
 float Game::deltaTime = 0.0f;
 
@@ -133,7 +134,7 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 	//assets->CreateProjectile(Vector2D(500, 460), Vector2D(2,-1) , 200, 2, "projectile");
 	//assets->CreateProjectile(Vector2D(600, 570), Vector2D(-2,0) , 200, 2, "projectile");
 
-	assets->CreateBall(Vector2D(400, 500), Vector2D(0, 1), 8, "ball", true);
+	//assets->CreateBall(Vector2D(400, 500), Vector2D(0, 1), 8, "ball", true);
 	assets->CreateBackground(Vector2D(0, 0), "background");
 
 
@@ -194,6 +195,7 @@ auto& players(manager.getGroup(Game::groupPlayers));
 auto& colliders(manager.getGroup(Game::groupColliders));
 auto& balls(manager.getGroup(Game::groupBalls));
 auto& bricks(manager.getGroup(Game::groupBricks));
+auto& oldBricks(manager.getGroup(Game::groupOldBricks));
 auto& backgrounds(manager.getGroup(Game::groupBackgrounds));
 
 void Game::handleEvents()
@@ -336,7 +338,10 @@ void Game::update()
 					Mix_PlayChannel(-1, bonusBallSound, 0);
 				}
 
-				b->getComponent<BrickComponent>().entity->destroy();
+				//b->getComponent<BrickComponent>().entity->destroy();
+				//fade out animation
+
+			    b->getComponent<SpriteComponent>().FadeOut(0.25f);
 
 				score++;
 				if (score % 100 == 0)
@@ -352,7 +357,6 @@ void Game::update()
 				break;
 			}
 		}
-		
 	}
 	/*
 	if (player.getComponent<TransformComponent>().position.x < 1)
@@ -420,6 +424,8 @@ void Game::render()
 
 	for (auto& b : bricks)
 		b->draw();
+	for (auto& b : oldBricks)
+		b->draw();
 
 	particleSystem.Render(renderer);
 
@@ -485,4 +491,10 @@ void Game::clean()
 void Game::playSound(Mix_Chunk* sound)
 {
 	if (sound) Mix_PlayChannel(-1, sound, 0);
+}
+
+void Game::Start()
+{
+	gameIsStarted = true;
+	assets->CreateBall(Vector2D(player.getComponent<TransformComponent>().position.x + 32, player.getComponent<TransformComponent>().position.y - 48), Vector2D(0, -1), 8, "ball", true);
 }

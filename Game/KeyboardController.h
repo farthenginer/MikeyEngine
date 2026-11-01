@@ -22,11 +22,11 @@ public:
     void update() override
     {
         const Uint8* keys = SDL_GetKeyboardState(nullptr);
-
-        bool up = keys[SDL_SCANCODE_W];
-        bool down = keys[SDL_SCANCODE_S];
-        bool left = keys[SDL_SCANCODE_A];
-        bool right = keys[SDL_SCANCODE_D];
+        //const Uint8* mKeys = SDL_GetMouseState(nullptr);
+        bool up = keys[SDL_SCANCODE_W] || keys[SDL_SCANCODE_UP];
+        bool down = keys[SDL_SCANCODE_S] || keys[SDL_SCANCODE_DOWN];
+        bool left = keys[SDL_SCANCODE_A] || keys[SDL_SCANCODE_LEFT];
+        bool right = keys[SDL_SCANCODE_D] || keys[SDL_SCANCODE_RIGHT];
 
         transform->velocity.x = 0;
         transform->velocity.y = 0;
@@ -94,12 +94,17 @@ public:
             case SDLK_p:
                 Game::isDebugging = !Game::isDebugging;//debugging flip flop
                 break;
-            
+
             case SDLK_ESCAPE:
                 Game::isRunning = false;
                 break;
             }
-        }
 
+            if (Game::gameIsStarted == false)
+            {
+                std::cout << "Start" << std::endl;
+                Game::Start();
+            }
+        }
     }
 };

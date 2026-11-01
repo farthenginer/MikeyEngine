@@ -52,8 +52,13 @@ public:
 		groupProjectiles,
 		groupBalls,
 		groupBricks,
+		groupOldBricks,
 		groupBackgrounds
 	};
+
+	static bool gameIsStarted;
+
+	static void Start();
 
 private:
 

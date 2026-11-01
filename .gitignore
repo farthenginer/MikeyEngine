@@ -34,3 +34,12 @@ Thumbs.db
 *.log
 *.tmp
 /SDLZero
+/SDLZero
+/SDLZero/x64
+SDLZero/x64/Release/SDLZero.iobj
+SDLZero/x64/Release/SDLZero.ipdb
+SDLZero/x64/Release/SDLZero.tlog/CL.command.1.tlog
+SDLZero/x64/Release/SDLZero.tlog/CL.read.1.tlog
+SDLZero/x64/Release/SDLZero.tlog/CL.write.1.tlog
+SDLZero/x64/Release/vc143.pdb
+x64/Release/SDLZero.pdb

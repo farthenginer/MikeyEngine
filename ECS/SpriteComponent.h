@@ -17,6 +17,16 @@ private:
 	int frames = 0;
 	int speed = 100;
 
+	bool fadingOut = false;
+	bool isBrick = false;
+
+	float fadeDuration = 1.0f;
+	float fadeTimer = 0.0f;
+	float flashAmount = 0.0f;
+
+	Uint8 alpha = 255;
+
+
 public:
 
 	int animIndex = 0;
@@ -74,6 +84,25 @@ public:
 
 	void update()override
 	{
+		if (fadingOut)
+		{
+			fadeTimer += Game::deltaTime;
+
+			float progress = fadeTimer / fadeDuration;
+
+			if (progress >= 1.0f)
+			{
+				progress = 1.0f;
+				std::cout << "fade out has finished" << std::endl;
+				entity->destroy();
+				fadingOut = false;
+			}
+
+			alpha = static_cast<Uint8>(255.0f * (1.0f - progress));
+
+			flashAmount = -progress;
+		}
+
 		if (animated)
 		{
 			srcRect.x = srcRect.w * static_cast<int>((SDL_GetTicks() / speed) % frames);
@@ -89,7 +118,22 @@ public:
 	}
 	void draw() override
 	{
+		if (isBrick)
+		{
+			Uint8 color = static_cast<Uint8>(255.0f * flashAmount);
+
+			SDL_SetTextureColorMod(texture, color, color, color);
+			SDL_SetTextureAlphaMod(texture, alpha);
+		}
+
 		TextureManager::Draw(texture, srcRect, destRect, spriteFlip);
+
+		if (isBrick)
+		{
+			SDL_SetTextureColorMod(texture, 255, 255, 255);
+			SDL_SetTextureAlphaMod(texture, 255);
+		}
+
 	}
 
 	void Play(const char* animName)
@@ -105,5 +149,18 @@ public:
 		frames = animations[animName].frames;
 		animIndex = animations[animName].index;
 		speed = animations[animName].speed;
+	}
+
+	void FadeOut(float duration)
+	{
+		fadeDuration = duration;
+		fadeTimer = 0.0f;
+		alpha = 255;
+		flashAmount = 0.0f;
+		fadingOut = true;
+		isBrick = true;
+		std::cout << "fade out has started" << std::endl;
+		entity->delGroup(Game::groupBricks);
+		entity->addGroup(Game::groupOldBricks);
 	}
 };
