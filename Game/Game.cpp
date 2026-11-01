@@ -331,7 +331,7 @@ void Game::update()
 
 				if (b->getComponent<BrickComponent>().isBonus == true)
 				{
-					assets->CreateBall(Vector2D(400, 300), Vector2D(0, 1), 8, "ball", false);
+					assets->CreateBall(Vector2D(b->getComponent<TransformComponent>().position.x, b->getComponent<TransformComponent>().position.y), Vector2D(0, 1), 8, "ball", false);
 					//play sfx
 					Mix_PlayChannel(-1, bonusBallSound, 0);
 				}
