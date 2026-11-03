@@ -120,4 +120,7 @@
   <ItemGroup>
     <Font Include="..\..\old_tnt\Downloads\terminal.ttf" />
   </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\SDL2\SDL2_image-2.0.1-VC\lib\x64\SDL2_image.lib" />
+  </ItemGroup>
 </Project>
