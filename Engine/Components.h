@@ -5,8 +5,5 @@
 #include "../Game/KeyboardController.h"
 #include "../ECS/ColliderComponent.h"
 #include "../ECS/TileComponent.h"
-#include "../ECS/ProjectileComponent.h"
-#include "../ECS/BallComponent.h"
-#include "../ECS/BrickComponent.h"
 #include "../ECS/ParticleComponent.h"
 #include "../ECS/TrailComponent.h"

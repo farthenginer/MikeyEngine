@@ -8,51 +8,10 @@ AssetsManager::AssetsManager(Manager* man) : manager(man)
 AssetsManager::~AssetsManager()
 {}
 
-void AssetsManager::CreateProjectile(Vector2D pos, Vector2D vel, int range, int speed, std::string id)
-{
-	auto& projectile(manager->addEntity());
-	projectile.addComponent<TransformComponent>(pos.x, pos.y, 32, 32, 1);
-	projectile.addComponent<SpriteComponent>(id, false);
-	projectile.addComponent<ProjectileComponent>(range, speed, vel);
-	projectile.addComponent<ColliderComponent>("projectile");
-	projectile.addGroup(Game::groupProjectiles);
-}
-
-void AssetsManager::CreateBall(Vector2D pos, Vector2D vel, int speed, std::string id, bool isMainBall)
-{
-	auto& ball(manager->addEntity());
-	ball.addComponent<TransformComponent>(pos.x, pos.y, 8, 8, 2, speed);
-	ball.addComponent<SpriteComponent>(id, false);
-	ball.addComponent<BallComponent>(speed, vel, isMainBall);
-	ball.addComponent<ColliderComponent>("ball");
-	ball.addComponent<TrailComponent>();
-	ball.addGroup(Game::groupBalls);
-}
-
-void AssetsManager::CreateBrick(Vector2D pos, const char* id, bool isBonus)
-{
-	auto& brick(manager->addEntity());
-	brick.addComponent<TransformComponent>(pos.x, pos.y, 48, 32, 1, 0);
-	brick.addComponent<SpriteComponent>(id, false);
-	brick.addComponent<BrickComponent>(id);
-	brick.getComponent<BrickComponent>().isBonus = isBonus;
-	brick.addComponent<ColliderComponent>("brick0");
-	brick.addGroup(Game::groupBricks);
-}
-
-void AssetsManager::CreateBackground(Vector2D pos, const char* id)
-{
-	auto& bg(manager->addEntity());
-	bg.addComponent<TransformComponent>(pos.x, pos.y, 210, 168, 4, 0);
-	bg.addComponent<SpriteComponent>(id, false);
-	bg.addGroup(Game::groupBackgrounds);
-}
-
 void AssetsManager::AddTexture(std::string id, const char* path)
 {
 	textures.emplace(id, TextureManager::LoadTexture(path));
 }
-
 
 SDL_Texture* AssetsManager::GetTexture(std::string id)
 {

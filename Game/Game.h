@@ -36,24 +36,11 @@ public:
 	Uint64 lastFrameTime = 0;
 	static float deltaTime;
 
-	static Mix_Chunk* brickSound;
-	static Mix_Chunk* hitPlayerSound;
-	static Mix_Chunk* newBallSound;
-	static Mix_Chunk* scoreUpSound;
-	static Mix_Chunk* loseBallSound;
-	static Mix_Chunk* hitWallSound;
-	static Mix_Chunk* bonusBallSound;
-
 	enum groupLabels : std::size_t
 	{
 		groupMap,
 		groupPlayers,
-		groupColliders,
-		groupProjectiles,
-		groupBalls,
-		groupBricks,
-		groupOldBricks,
-		groupBackgrounds
+		groupColliders
 	};
 
 	static bool gameIsStarted;
@@ -69,12 +56,7 @@ private:
 
 	SDL_Window* window;
 
-	int score = 0;
-	bool scoreChanged = true;
 	TTF_Font* font = nullptr;
-	SDL_Texture* scoreTexture = nullptr;
-	int scoreW = 0, scoreH = 0;
-
-	void updateScoreTexture();
+	SDL_Texture* textTexture = nullptr;
 };
 #endif // !Game_hpp

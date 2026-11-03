@@ -18,7 +18,7 @@ private:
 	int speed = 100;
 
 	bool fadingOut = false;
-	bool isBrick = false;
+	bool isFading = false;
 
 	float fadeDuration = 1.0f;
 	float fadeTimer = 0.0f;
@@ -118,7 +118,7 @@ public:
 	}
 	void draw() override
 	{
-		if (isBrick)
+		if (isFading)
 		{
 			Uint8 color = static_cast<Uint8>(255.0f * flashAmount);
 
@@ -128,7 +128,7 @@ public:
 
 		TextureManager::Draw(texture, srcRect, destRect, spriteFlip);
 
-		if (isBrick)
+		if (isFading)
 		{
 			SDL_SetTextureColorMod(texture, 255, 255, 255);
 			SDL_SetTextureAlphaMod(texture, 255);
@@ -158,9 +158,7 @@ public:
 		alpha = 255;
 		flashAmount = 0.0f;
 		fadingOut = true;
-		isBrick = true;
+		isFading = true;
 		std::cout << "fade out has started" << std::endl;
-		entity->delGroup(Game::groupBricks);
-		entity->addGroup(Game::groupOldBricks);
 	}
 };

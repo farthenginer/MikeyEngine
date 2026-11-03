@@ -139,7 +139,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ECS\BallComponent.cpp" />
     <ClCompile Include="ECS\ParticleComponent.cpp" />
     <ClCompile Include="ECS\TrailComponent.cpp" />
     <ClCompile Include="Engine\Collision.cpp" />
@@ -153,8 +152,6 @@
     <ClCompile Include="Engine\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ECS\BallComponent.h" />
-    <ClInclude Include="ECS\BrickComponent.h" />
     <ClInclude Include="ECS\ColliderComponent.h" />
     <ClInclude Include="ECS\Particle.h" />
     <ClInclude Include="ECS\ParticleComponent.h" />
@@ -165,7 +162,6 @@
     <ClInclude Include="ECS\ECS.h" />
     <ClInclude Include="ECS\TransformComponent.h" />
     <ClInclude Include="ECS\SpriteComponent.h" />
-    <ClInclude Include="ECS\ProjectileComponent.h" />
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Engine\GameObject.h" />
     <ClInclude Include="Game\KeyboardController.h" />
