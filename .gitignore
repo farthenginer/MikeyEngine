@@ -13,7 +13,6 @@ dist/
 *.o
 *.obj
 *.a
-*.lib
 *.so
 *.dylib
 
@@ -27,8 +26,6 @@ dist/
 *.lastbuildstate
 *.aps
 *.ipch
-
-*.dll
 
 .vs/
 *.user
