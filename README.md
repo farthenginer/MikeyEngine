@@ -43,9 +43,6 @@ The source files include each other using these folder names, so keep this layou
 │   ├── SpriteComponent.h
 │   ├── ColliderComponent.h
 │   ├── TileComponent.h
-│   ├── ProjectileComponent.h
-│   ├── BallComponent.h / .cpp
-│   ├── BrickComponent.h
 │   ├── ParticleComponent.h / .cpp
 │   └── TrailComponent.h / .cpp
 ├── Engine/               # Core helpers
