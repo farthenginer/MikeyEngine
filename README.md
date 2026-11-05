@@ -2,6 +2,10 @@
 
 A small, lightweight 2D game engine written in **C++** on top of **SDL2**, built around an **Entity Component System (ECS)**. It gives you a window, a game loop, sprite rendering, collisions, tile maps, audio, text, and a particle system, so you can focus on writing your own game logic.
 
+### Demo Games
+
+***[Breakout2D (Made by Mikey Engine)](https://mikey-manji.itch.io/breakout-made-by-mikey-engine)***
+
 ## Features
 
 - **Entity Component System**: build objects by attaching components (`TransformComponent`, `SpriteComponent`, `ColliderComponent`, ...) to entities.
