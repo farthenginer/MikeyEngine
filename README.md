@@ -4,7 +4,9 @@ A small, lightweight 2D game engine written in **C++** on top of **SDL2**, built
 
 ### Demo Games
 
-***[Breakout2D (Made by Mikey Engine)](https://mikey-manji.itch.io/breakout-made-by-mikey-engine)***
+- **Breakout2D**
+  - [Play Demo](https://mikey-manji.itch.io/breakout-made-by-mikey-engine)
+  - [Source Code](https://github.com/farthenginer/MikeyEngine/tree/demo-game)
 
 ## Features
 
