@@ -21,6 +21,12 @@ A small, lightweight 2D game engine written in **C++** on top of **SDL2**, built
 - **Particle system and trail effects** (`ParticleComponent`, `TrailComponent`).
 - **Fixed 60 FPS loop** with a per-frame `Game::deltaTime`.
 - **Debug mode**: press `P` to toggle collider drawing.
+- 
+## Video Tutorial
+
+Learn how to create a game using Mikey Engine:
+
+[![How to make games with Mikey Engine](https://img.youtube.com/vi/4DRXK3agF-g/maxresdefault.jpg)](https://www.youtube.com/watch?v=4DRXK3agF-g)
 
 ## Dependencies
 
