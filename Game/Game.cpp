@@ -69,17 +69,21 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 			std::cout << "Mix_OpenAudio error: " << Mix_GetError() << std::endl;
 
-		Mix_VolumeMusic(64);		isRunning = true;
+		Mix_VolumeMusic(64);
+		isRunning = true;
 
 	}
 	else
 	{
 		isRunning = false;
 	}
+
+	gameIsStarted = true;
+	Start();
+
 }
 
-auto& players(manager.getGroup(Game::groupPlayers));
-auto& colliders(manager.getGroup(Game::groupColliders));
+auto& GameObjects(manager.getGroup(Game::groupGameObjects));
 
 void Game::handleEvents()
 {
@@ -111,17 +115,17 @@ void Game::update()
 	lastFrameTime = currentTime;
 
 	particleSystem.Update(Game::deltaTime);
+	
+	Update();
 }
 
 void Game::render()
 {
 	SDL_RenderClear(renderer);
 
-	for (auto& c : colliders)
-		c->draw();
+	for (auto& gameObject: GameObjects)
+		gameObject->draw();
 
-	for (auto& p : players)
-		p->draw();
 
 	particleSystem.Render(renderer);
 
@@ -148,7 +152,14 @@ void Game::playSound(Mix_Chunk* sound)
 	if (sound) Mix_PlayChannel(-1, sound, 0);
 }
 
+//Start is called before the first frame update
 void Game::Start()
 {
-	gameIsStarted = true;
+
+}
+
+//Update is called once per frame
+void Game::Update()
+{
+
 }

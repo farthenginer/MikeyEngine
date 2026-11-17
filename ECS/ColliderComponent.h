@@ -16,7 +16,9 @@ public:
 	SDL_Rect srcR, destR;
 
 	TransformComponent* transform;
-	 
+	
+	const char* collisionTexturePath;
+
 	ColliderComponent(std::string t)
 	{
 		tag = t;
@@ -37,7 +39,7 @@ public:
 		
 		transform = &entity->getComponent<TransformComponent>();
 
-		tex = TextureManager::LoadTexture("assets/Debug/collisionTexture.png");
+		tex = TextureManager::LoadTexture(collisionTexturePath);
 		srcR = { 0,0,32,32 };
 		destR = {collider.x, collider.y, collider.w, collider.h};
 	}

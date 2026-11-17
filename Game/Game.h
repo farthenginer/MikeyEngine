@@ -38,14 +38,13 @@ public:
 
 	enum groupLabels : std::size_t
 	{
-		groupMap,
-		groupPlayers,
-		groupColliders
+		groupGameObjects
 	};
 
 	static bool gameIsStarted;
 
 	static void Start();
+	static void Update();
 
 private:
 
